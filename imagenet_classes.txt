@@ -549,7 +549,7 @@ n02977058 548 cash_machine
 n04238763 549 slide_rule
 n03180011 550 desktop_computer
 n03485407 551 hand-held_computer
-n03832673 552 notebook
+n03832673 552 notebook ***(note that this is a notebook computer)
 n06359193 553 web_site
 n03496892 554 harvester
 n04428191 555 thresher
