@@ -1,183 +1,114 @@
 <!DOCTYPE html>
-<style>
+<html lang="en">
 
-.axis .domain {
-  display: none;
-}
-</style>
-<svg width="960" height="500"></svg>
 <head>
-  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <meta charset="UTF-8">
+  <title>Bootstrap Components</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <p style="color: black; font-size:40px;">Confidence Percentage for Photos of Objects Taken Straight On</p>  
-</body>
-<script>
-console.clear()
-var svg = d3.select("svg"),
-    margin = {top: 40, right: 100, bottom: 60, left: 60},
-    width = +svg.attr("width") - margin.left - margin.right,
-    height = +svg.attr("height") - margin.top - margin.bottom,
-    g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-var x0 = d3.scaleBand()
-    .rangeRound([0, width])
-    .paddingInner(0.1);
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">CNN-Classification</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="./index.html">Home</a></li>
+          <li><a href="./straight_on.html">Straight On</a></li>
+          <li><a href="./back.html">Back</a></li>
+          <li><a href="./from_left.html">From Left</a></li>
+          <li><a href="./from_right.html">From Right</a></li>
+          <li><a href="./on_its_side.html">On Its Side</a></li>
+        </ul>
+    </div>
+</nav>
 
-var x1 = d3.scaleBand()
-    .padding(0.05);
+  <div class="container">
+    <div class="jumbotron">
+      <h1 class="display-4">CNN Classification Project</h1>
+      <p class="lead">It's known that image recognition systems are easily fooled by well-known objects that appear in unnatural positions, e.g., a school bus on its side.</p>  
+      <p class="lead">So we wonder what characteristics have more of an impact on CNNs failing to correctly classify an object in an image.</p>
+      <p class="lead">We used three models (Inception, NASNet, and VGG) pre-trained on the ImageNet dataset and then introduce images of common objects in a variety of situations to see which are most problematic for the models.</p>
+      <hr class="my-4">
+      <p style="font-size: x-large;">Below you can see the images we used from a "Straight-On" position.</p>
+    </div>
+  </div>
 
-var y = d3.scaleLinear()
-    .rangeRound([height, 0]);
-
-var y1 = d3.scaleBand()
-  
-var z = d3.scaleOrdinal()
-    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
-
-var stack = d3.stack()
-    .offset(d3.stackOffsetExpand);
-  
-d3.csv("data.csv", function(error, data) {
-  if (error) throw error;
-  
-  data.forEach(function(d){
-    d.Value = +d.Value
-    d.Selected_object = +d.Selected_object;
-  })
-  
-	console.log("data", data);
-  
-  x0.domain(data.map(function(d) { return d.State; }));
-  x1.domain(data.map(function(d) { return d.Year; }))
-    .rangeRound([0, x0.bandwidth()])
-  	.padding(0.2);
-  
-  z.domain(data.map(function(d) { return d.AgeGroup; }))
-  var keys = z.domain()
-  
-  var groupData = d3.nest()
-    .key(function(d) { return d.Year + d.State; })
-  	.rollup(function(d, i){
-      
-      var d2 = {Year: d[0].Year, State: d[0].State}
-      d.forEach(function(d){
-        d2[d.AgeGroup] = d.Value
-      })
-      console.log("rollup d", d, d2);
-    	return d2;
-    })
-    .entries(data)
-  	.map(function(d){ return d.value; });
-  
-  console.log("groupData", groupData)
-  
-  var stackData = stack
-  	.keys(keys)(groupData)
-  
-  console.log("stackData", stackData)
-  
-  //y.domain([0, d3.max(data, function(d) { return d.Value; })]).nice();
-
-  console.log("keys", keys)
-  
-  var serie = g.selectAll(".serie")
-    .data(stackData)
-    .enter().append("g")
-      .attr("class", "serie")
-      .attr("fill", function(d) { return z(d.key); });
-  
-  serie.selectAll("rect")
-    .data(function(d) { return d; })
-    .enter().append("rect")
-  		.attr("class", "serie-rect")
-  		.attr("transform", function(d) { return "translate(" + x0(d.data.State) + ",0)"; })
-      .attr("x", function(d) { return x1(d.data.Year); })
-      .attr("y", function(d) { return y(d[1]); })
-      .attr("height", function(d) { return y(d[0]) - y(d[1]); })
-      .attr("width", x1.bandwidth())
-  		.on("mouseover", function() { tooltip.style("display", null); })
-      .on("mouseout", function() { tooltip.style("display", "none"); })
-      .on("mousemove", function(d) {
-        console.log(d);
-        var xPosition = d3.mouse(this)[0];
-        var yPosition = d3.mouse(this)[1];
-        tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
-        tooltip.select("text").text(d[1]-d[0]);
-    });
-
-  g.append("g")
-      .attr("class", "axis")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x0));
-
-  g.append("g")
-      .attr("class", "axis")
-      .call(d3.axisLeft(y).ticks(null, "s"))
-    .append("text")
-      .attr("x", 2)
-      .attr("y", y(y.ticks().pop()) + 0.5)
-      .attr("dy", "0.32em")
-      .attr("fill", "#000")
-      .attr("font-weight", "bold")
-      .attr("text-anchor", "start");
-
-  //var legend = g.append("g")
-  //     .attr("font-family", "sans-serif")
-  //     .attr("font-size", 10)
-  //     .attr("text-anchor", "end")
-  //   .selectAll("g")
-  //   .data(keys.slice().reverse())
-  //   .enter().append("g")
-  //     .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
-
-  // legend.append("rect")
-  //     .attr("x", width - 19)
-  //     .attr("width", 19)
-  //     .attr("height", 19)
-  //     .attr("fill", z);
-
-  // legend.append("text")
-  //     .attr("x", width - 24)
-  //     .attr("y", 9.5)
-  //     .attr("dy", "0.32em")
-  //     .text(function(d) { return d; });
-      
-      
-  
-  var legend = serie.append("g")
-      .attr("class", "legend")
-      .attr("transform", function(d) { var d = d[d.length - 1]; return "translate(" + (x0(d.data.State) + x1(d.data.Year) + x1.bandwidth()) + "," + ((y(d[0]) + y(d[1])) / 2) + ")"; });
-
-  legend.append("line")
-      .attr("x1", -6)
-      .attr("x2", 6)
-      .attr("stroke", "#000");
-
-  legend.append("text")
-      .attr("x", 9)
-      .attr("dy", "0.35em")
-      .attr("fill", "#000")
-      .style("font", "14px sans-serif")
-      .text(function(d) { return d.key; });
-  
-});
-
-var tooltip = svg.append("g")
-    .attr("class", "tooltip")
-    .style("display", "none");
-      
-  tooltip.append("rect")
-    .attr("width", 100)
-    .attr("height", 20)
-    .attr("fill", "white")
-    .style("opacity", 0.5);
-
-  tooltip.append("text")
-    .attr("x", 30)
-    .attr("dy", "1.2em")
-    .style("text-anchor", "middle")
-    .attr("font-size", "12px")
-    .attr("font-weight", "bold");
-
-</script>
+<div class="container">
+  <h3 class="text-center">Thumbnails</h3>
+    <div class="row">
+        <div class="col-md-4">
+          <div class="thumbnail">
+            <img src="https://github.com/Brian-McHugh/CNN-Classification/blob/master/images/objects/coffee_mug/coffee_mug-straight_on.jpg?raw=true" alt="..." class="img-thumbnail">
+          </div>
+          <div class="caption">
+              <h3>Coffee Mug</h3>        
+            </div>       
+        </div>
+        <div class="col-md-4">
+            <div class="thumbnail">
+              <img src="https://github.com/Brian-McHugh/CNN-Classification/blob/master/images/objects/hammer/hammer-straight_on.jpg?raw=true" alt="..." class="img-thumbnail">
+            </div>
+          <div class="caption">
+              <h3>Hammer</h3>              
+          </div>
+        </div>
+        <div class="col-md-4">
+            <div class="thumbnail">
+              <img src="https://github.com/Brian-McHugh/CNN-Classification/blob/master/images/objects/notebook/notebook-straight_on.jpg?raw=true" alt="..." class="img-thumbnail">
+            </div>
+            <div class="caption">
+                <h3>Notebook Computer</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="thumbnail">
+              <img src="https://github.com/Brian-McHugh/CNN-Classification/blob/master/images/objects/pot/pot-straight_on.jpg?raw=true" alt="..." class="img-thumbnail">
+            </div>
+            <div class="caption">
+                <h3>Pot</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="thumbnail">
+              <img src="https://github.com/Brian-McHugh/CNN-Classification/blob/master/images/objects/soap_dispenser/soap_dispenser-straight_on.jpg?raw=true" alt="..." class="img-thumbnail">
+            </div>
+            <div class="caption">
+                <h3>Soap Dispenser</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="thumbnail">
+              <img src="https://github.com/Brian-McHugh/CNN-Classification/blob/master/images/objects/sunglasses/sunglasses-straight_on.jpg?raw=true" alt="..." class="img-thumbnail">
+            </div>
+            <div class="caption">
+                <h3>Sunglasses</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="thumbnail">
+              <img src="https://github.com/Brian-McHugh/CNN-Classification/blob/master/images/objects/umbrella/umbrella-straight_on.jpg?raw=true" alt="..." class="img-thumbnail">
+            </div>
+            <div class="caption">
+                <h3>Umbrella</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="thumbnail">
+              <img src="https://github.com/Brian-McHugh/CNN-Classification/blob/master/images/objects/wine_bottle/wine_bottle-straight_on.jpg?raw=true" alt="..." class="img-thumbnail">
+            </div>
+            <div class="caption">
+                <h3>Wine Bottle</h3>
+            </div>
+        </div>
+    </div>
+</div>
+   
+</html>
