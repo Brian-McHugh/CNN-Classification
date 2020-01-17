@@ -1,0 +1,84 @@
+/* Giving our navbar some padding and a background color */
+.navbar-brand {
+    padding: 10px;
+    background-color: #041a99;
+    font-family: Georgia;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+h1 {
+    /* color: #041a99; */
+    font-family: Georgia;
+    font-weight: bold;
+    padding-top: 10px;
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-bottom: 10px;
+    background: #ffff;
+}
+
+h3 {
+    color:  #041a99;
+    font-family: Georgia;
+    font-weight: bold;
+    padding-top: 10px;
+    padding-right: 20px;
+    /* padding-left: 20px; */
+    padding-bottom: 10px;
+    background: #ffff;
+}
+
+h5 {
+    color: #0a0a0a;
+    font-family: Georgia;
+    font-weight: bold;
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    padding-left: 50px;
+    background: #ffff;
+}
+
+.img {
+    background: #ffff;
+    padding-top: 20px;
+    padding-right: 10px;
+    padding-bottom: 20px;
+    padding-left: 10px;
+}
+
+
+.navbar {
+    background-color: #ffff;
+}
+
+.container-fluid {
+    padding: 40px;
+    height: auto;
+}
+
+.box {
+    min-height: 70%;
+    padding-top: 30px;
+    padding-right: 30px;
+    padding-bottom: 10px;
+    padding-left: 30px;
+    background: #ffff;
+  }
+
+/* body {
+    padding-right: 40px;
+    padding-bottom: 40px;
+    padding-left: 40px;
+    background: #d3d3d3;
+} */
+
+@media (max-width: 766px) {
+    nav.navbar {
+        background-color:  #041a99;
+    }
+    nav.navbar-brand {
+        padding: 0px;
+    }
+}
