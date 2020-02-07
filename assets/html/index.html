@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>CNN-Classification Project</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="../css/custom.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-md navbar-light">
+      <a class="navbar-brand" style="color: #fff;" href="index.html">CNN-Classification</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Models
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="VGG.html">VGG19</a>
+                      <a class="dropdown-item" href="Incep.html">InceptionV3</a>
+                      <a class="dropdown-item" href="NAS.html">NASNet Large</a>
+                  </div>
+              </li>
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Objects
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="coffee_mug.html">Coffee Mug</a>
+                      <a class="dropdown-item" href="hammer.html">Hammer</a>
+                      <a class="dropdown-item" href="notebook.html">Notebook Computer</a>
+                      <a class="dropdown-item" href="soap_dispenser.html">Soap Dispenser</a>
+                      <a class="dropdown-item" href="sunglasses.html">Sunglasses</a>
+                      <a class="dropdown-item" href="umbrella.html">Umbrella</a>
+                      <a class="dropdown-item" href="wine_bottle.html">Wine Bottle</a>
+                  </div>
+              </li>
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Perspectives
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="straight_on.html">Straight On</a>
+                      <a class="dropdown-item" href="photos_otherpositions.html">Other Perspectives</a>
+                  </div>
+              </li>
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Model Correct by Object
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="Tables_Percent_Correct-Object.html">Table</a>
+                      <a class="dropdown-item" href="modelCorrectByObject.html">Graph</a>
+                  </div>
+              </li>
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Model Correct by Position
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="Tables_Percent_Correct-Position_.html"><Table></Table></a>
+                      <a class="dropdown-item" href="modelCorrectByPosition.html">Graph</a>
+                  </div>
+              </li>
+          </ul>
+      </div>
+  </nav>
+
+  <div class="container">
+    <div class="jumbotron">
+      <h1 class="display-4">Object Classification Project</h1>
+      <p class="lead">It's known that image recognition systems are easily fooled by well-known objects that appear in unnatural positions, e.g., a school bus on its side.</p>  
+      <p class="lead">So we wonder what characteristics have more of an impact on CNNs failing to correctly classify an object in an image.</p>
+      <p class="lead">We used three models (Inception, NASNet, and VGG) pre-trained on the ImageNet dataset and then introduce images of common objects in a variety of situations to see which are most problematic for the models.</p>
+      <hr class="my-4">
+      <p style="font-size: x-large;">Below you can see the images we used from a "Straight-On" position.</p>
+    </div>
+  </div>
+
+<div class="container">
+  <h3 class="text-center">Objects</h3>
+    <div class="row">
+        <div class="col-md-4">
+          <div class="thumbnail">
+            <a href="coffee_mug.html"><img src="https://github.com/Brian-McHugh/CNN-Classification/blob/master/images/objects/coffee_mug/coffee_mug-straight_on.jpg?raw=true" alt="..." class="img-thumbnail"></a>
+          </div>
+          <div class="caption">
+              <h3>Coffee Mug</h3>        
+            </div>       
+        </div>
+        <div class="col-md-4">
+            <div class="thumbnail">
+              <a href="hammer.html"><img src="https://github.com/Brian-McHugh/CNN-Classification/blob/master/images/objects/hammer/hammer-straight_on.jpg?raw=true" alt="..." class="img-thumbnail"></a>
+            </div>
+          <div class="caption">
+              <h3>Hammer</h3>              
+          </div>
+        </div>
+        <div class="col-md-4">
+            <div class="thumbnail">
+              <a href="notebook.html"><img src="https://github.com/Brian-McHugh/CNN-Classification/blob/master/images/objects/notebook/notebook-straight_on.jpg?raw=true" alt="..." class="img-thumbnail"></a>
+            </div>
+            <div class="caption">
+                <h3>Notebook Computer</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="thumbnail">
+              <a href="soap_dispenser.html"><img src="https://github.com/Brian-McHugh/CNN-Classification/blob/master/images/objects/soap_dispenser/soap_dispenser-straight_on.jpg?raw=true" alt="..." class="img-thumbnail"></a>
+            </div>
+            <div class="caption">
+                <h3>Soap Dispenser</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="thumbnail">
+              <a href="sunglasses.html"><img src="https://github.com/Brian-McHugh/CNN-Classification/blob/master/images/objects/sunglasses/sunglasses-straight_on.jpg?raw=true" alt="..." class="img-thumbnail"></a>
+            </div>
+            <div class="caption">
+                <h3>Sunglasses</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="thumbnail">
+              <a href="umbrella.html"><img src="https://github.com/Brian-McHugh/CNN-Classification/blob/master/images/objects/umbrella/umbrella-straight_on.jpg?raw=true" alt="..." class="img-thumbnail"></a>
+            </div>
+            <div class="caption">
+                <h3>Umbrella</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+          <div class="thumbnail">
+            <a href="wine_bottle.html"><img src="https://github.com/Brian-McHugh/CNN-Classification/blob/master/images/objects/wine_bottle/wine_bottle-straight_on.jpg?raw=true" alt="..." class="img-thumbnail"></a>
+          </div>
+            <div class="caption">
+                <h3>Wine Bottle</h3>
+            </div>
+        </div>
+    </div>
+</div>
+   
+</html>
